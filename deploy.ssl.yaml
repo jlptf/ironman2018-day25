@@ -1,0 +1,33 @@
+#####################################
+# 2018 ithome ironman
+# Author: James Lu
+# Topic: k8s 不自賞 - Day 25 保護你的系統：套用 SSL
+# Url: https://ithelp.ithome.com.tw/articles/10193959
+# Licence: MIT
+#####################################
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ssl-nginx
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels: 
+        app: ssl-nginx
+    spec:
+      containers:
+      - name: ssl-nginx
+        image: jlptf/ssl-nginx
+        ports:
+        - containerPort: 443
+        volumeMounts:
+        - name: nginx-ssl
+          mountPath: /etc/nginx/ssl
+          readOnly: true
+      volumes:
+      - name: nginx-ssl
+        secret:
+          secretName: tls-certificate
+

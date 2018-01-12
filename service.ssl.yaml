@@ -1,0 +1,20 @@
+#####################################
+# 2018 ithome ironman
+# Author: James Lu
+# Topic: k8s 不自賞 - Day 25 保護你的系統：套用 SSL
+# Url: https://ithelp.ithome.com.tw/articles/10193959
+# Licence: MIT
+#####################################
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ssl-web
+spec:
+  type: NodePort
+  selector:
+    app: ssl-nginx
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 443
